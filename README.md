@@ -16,7 +16,7 @@ Another Complex Compiler Collection，又一个复杂的编译器组合。
 - 数据类型
   - 强静态类型
   - 基本数据类型：bool，int, float, char
-  - 进阶数据类型：list，tuple，struct（预定义tuple），union，function
+  - 进阶数据类型：tuple，union，function
 - 流程控制
   - match
   
