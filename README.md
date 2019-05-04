@@ -6,103 +6,50 @@ Another Complex Compiler Collection，又一个复杂的编译器组合。
 
 ## 关于C Flat语言
 
+**注意，本节内容已经经过大幅度修改！**
+
 - 整体
-  - 语法类JS
-  - 半函数式（JS风格）面向过程
+  - 语法独特
+  - 纯函数式
   - 支持与C语言混编（具体方式为编译到汇编后调用C的库函数）
+  - 完全依赖C语言编译器
 - 数据类型
   - 强静态类型
   - 基本数据类型：bool，int, float, char
-  - 进阶数据类型：指针，函数（没错函数也视为变量）
-  - 支持struct，union，enum
-  - 支持struct内函数（不支持static）
-  - 不支持数组、引用（统一用指针）
+  - 进阶数据类型：list，tuple，struct（预定义tuple），union，function
 - 流程控制
-  - if / else
-  - C style for
-  - while
-  - do while
+  - match
   
 ```
-// 一个Sample
-function int main = () => {
-    int n
-    // 这里调用C语言函数
-    scanf("%d", &n)
-    
-    int res = 1
-    for (int i = 1; i <= n; i = i + 1) {
-        res = res * i
-    }
-    
-    // 这里调用C语言函数
-    printf("%d\n", res)
-    
-    return 0
+// 一个Sample：求n!
+import io
+
+/* 定义函数时：
+ * f: a -> b = ... ：f是参数为a，返回类型为b的函数
+ * f: b = ...      ：f是没有参数，返回类型为b的函数
+ * f = ...          : f是没有参数，返回类型自动推导的函数
+ */
+
+// 求阶乘
+let fact: (n: int) -> int = {
+  match n with
+  | m when m < 0 ->
+    nil
+  | a when a <= 1 ->
+    1
+  | others -> 
+    n * fact(n-1)
 }
 
-```
+// 主函数
+let main: int = {
+  read('%d')
+  |> fact
+  |> write('%d')
 
-对应的文法分析过程（是计算理论意义下的，不是编译器意义下的）：
-
-```
-declaration
-```
-
-```
-function-declaration
-```
-
-```
-type id = () => {
-    statements
+  0
 }
-```
 
-```
-type id = () => {
-    statement
-    function-call
-    
-    declaration
-    for-loop
-    
-    function-call
-    
-    return-statement
-}
-```
-
-```
-type id = () => {
-    type id
-    id(string-constant, operator id)
-    
-    type id = int-constant
-    for (declaration; statement; statement) {
-        statements
-    }
-    
-    id(string-constant, id)
-    
-    return int-constant
-}
-```
-
-```
-type id = () => {
-    type id
-    id(string-constant, operator id)
-    
-    type id = int-constant
-    for (type id = int-constant; id op id; id = id op id) {
-        id = id op od
-    }
-    
-    id(string-constant, id)
-    
-    return int-constant
-}
 ```
 
 ## 进度
@@ -118,8 +65,7 @@ type id = () => {
 
 ## 开发语言
 
-当然是C。  
-必要的时候会用一些奇怪的工具，比如shell脚本。可以考虑与C++混编。
+主要为F#。
 
 ## 项目架构
 
